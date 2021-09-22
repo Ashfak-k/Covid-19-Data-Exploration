@@ -5,6 +5,7 @@ Covid-19 Data exploration
 Skills used: Joins, CTE's, Temp Tables, Windows Function,Aggregate Functions, Creating Views, Converting Data Types
 
 */
+--------------------------------------------------------------------------------------------------------------------------
 
 
 Select *
@@ -27,6 +28,8 @@ Where continent is not null
 Order by 1,2
 
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Total Cases vs Total Deaths
 -- Shows likelihood of dying if you contract covid in your country
 
@@ -35,6 +38,8 @@ From PortfolioProject	..CovidDeaths
 where location = 'India'
 Order by 1,2
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Total Cases vs Population
 -- Shows what percentage of population got infected by Covid
@@ -45,6 +50,8 @@ From PortfolioProject	..CovidDeaths
 Order by 1,2
 
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Countries with Highest Infection Rate compared to Population
 
 Select Location, Population, Max(total_cases) as Highest_Infection_Count, Max((total_cases/Population))*100 as Percent_Population_Infected
@@ -53,6 +60,8 @@ From PortfolioProject	..CovidDeaths
 Group by Location, Population
 Order by Percent_Population_Infected desc
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Countries with Highest Death Count per Population
 
@@ -63,6 +72,8 @@ where continent is not null
 Group by Location
 Order by Total_Death_Count desc
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- BREAKING THINGS DOWN BY CONTINENT
 
@@ -75,6 +86,9 @@ where continent is not null
 Group by continent
 Order by Total_Death_Count desc
 
+
+--------------------------------------------------------------------------------------------------------------------------
+
 -- GLOBAL NUMBERS
 
 Select date, Sum(new_cases) as Total_Cases, Sum(Cast(new_deaths as int)) as Total_Deaths,
@@ -86,6 +100,8 @@ Group by date
 Order by 1,2
 
 
+--------------------------------------------------------------------------------------------------------------------------
+
 -- Joining both the tables
 
 Select *
@@ -94,6 +110,8 @@ join PortfolioProject..CovidVaccinations as vac
 	on dea.location = vac.location
 	and dea.date = vac.date
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Looking at Total Population vs New Vaccinations per day
 
@@ -107,6 +125,8 @@ where dea.continent is not null
 	and dea.location = 'India'
 Order by 2,3
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Total Population vs Vaccinations
 -- Shows Percentage of Population that has recieved at least one Covid Vaccine
@@ -122,6 +142,8 @@ where dea.continent is not null
 	--and dea.location = 'India'
 Order by 2,3 desc
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Using CTE to perform Calculation on Partition By in previous query
 		
@@ -144,6 +166,8 @@ select *, (Rolling_People_Vaccinated/population)*100 as Percentage_of_Population
 From Pop_vs_Vac
 Order by 2,3 desc
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Using Temp Table to perform Calculation on Partition By in previous query
 
@@ -175,6 +199,8 @@ select *, (Rolling_People_Vaccinated/population)*100 as Per_of_Population_Vaccin
 From #PercentageofPopulationVaccinated
 Order by 2,3 desc
 
+
+--------------------------------------------------------------------------------------------------------------------------
 
 -- Creating View to store data for later visualizations
 
